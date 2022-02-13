@@ -16,6 +16,16 @@ searchInput[0].addEventListener("input", e => {
     })
 
 })
+searchInput[1].addEventListener("input",e=>{document.getElementById("searchRecord").style.display='inline-block';});
+searchInput[1].addEventListener("input",e=>
+{
+    let lengthOfInput=document.getElementById("search").value;
+    if(lengthOfInput<1)
+    {
+        document.getElementById("searchRecord").style.display='none';
+    }
+});
+
 searchInput[1].addEventListener("input", e => {
     const value=e.target.value.toLowerCase() //getting each input on search bar
     users.forEach(user=>{
