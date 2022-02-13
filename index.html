@@ -13,6 +13,88 @@
     <script src="script.js" defer></script>
 
     <title>Pulkits Time page</title>
+    <style>
+        body {
+    background-color: white;
+    color: black;
+    }
+
+    .dark-mode {
+    background-color: #041C32;
+    color: white;
+
+    }
+
+    .dark-mode-header{
+    color: white;
+    background-color: black;
+    }    
+
+    .contactClassNotToggeDarkMode,.DarkIgnore{
+    color:black !important;
+    }
+
+    /*sliding button*/
+    .switch {
+    position: relative;
+    display: inline-block;
+    width: 30px;
+    height: 17px;
+    }
+
+    .switch input { 
+    opacity: 0;
+    width: 0;
+    height: 0;
+    }
+
+    .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    }
+
+    .slider:before {
+    position: absolute;
+    content: "";
+    height: 13px;
+    width: 12px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    }
+
+    input:checked + .slider {
+    background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+    -webkit-transform: translateX(13px);
+    -ms-transform: translateX(13px);
+    transform: translateX(13px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+    border-radius: 17px;
+    }
+
+    .slider.round:before {
+    border-radius: 50%;
+    }
+    </style>
     <script>
         let a;
         let date;
@@ -27,9 +109,16 @@
 
         function citySelected(){
         var selectedCity = document.getElementById("city").value;
-        var timeOffset={'Bombay':'+5.5','Singapore':'+8','London':'+0','USA':'-11','New Zealand':'+13','Austrailia':'+10.5','Russia':'+3','Japan':'+9','China':'+8','Bangladesh':'+6','Spain':'+1'};
-        timeOfSelectedCity=calcTime(selectedCity,timeOffset[selectedCity])
-        alert("City selected is: "+ selectedCity + ", date and time here is: "+ timeOfSelectedCity);
+        var timeOffset={'Singapore':'+8','London':'+0','USA':'-11','New Zealand':'+13','Austrailia':'+10.5','Russia':'+3','Japan':'+9','China':'+8','Bangladesh':'+6','Spain':'+1'};
+        timeOfSelectedCity=calcTime(selectedCity,timeOffset[selectedCity]);
+        //alert("City selected is: "+ selectedCity + ", date and time here is: "+ timeOfSelectedCity);
+
+        var modalDialog=document.getElementById("dialog-3");
+        //timeOfSelectedCity='13/02/2022, 23:13:37'
+        // slice from index 0 to index 9
+        let dateSliced = timeOfSelectedCity.slice(0, 10);
+        let timeSliced = timeOfSelectedCity.slice(12);
+        modalDialog.innerHTML="City selected is: \<strong>"+ selectedCity + "\</strong>\<br/> Date here is: \<strong>"+ dateSliced+"\</strong>\<br/>Time is: \<strong>"+timeSliced+"\</strong>";
         }
 
         // function to calculate local time in a different city given the city’s UTC offset
@@ -50,6 +139,29 @@
 <body  style=" text-align: center;">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Know Time</a>
+        <i class="fa fa-moon-o"></i>
+        <div style="padding-top: 0.7rem;">
+        <label class="switch">
+            <input id="chk" type="checkbox" onclick="logClick()">
+            <span class="slider round"></span>
+        </label>
+        </div>
+        <script>
+        
+        function logClick(){
+        let bttn=document.getElementById("chk");
+        document.getElementById("chk").removeAttribute("checked");
+        //bttn.checked = !bttn.checked;
+        //let bttnVal=bttn.checked;
+        console.log(bttn.checked);
+        DarkToggle();
+        }
+        function DarkToggle() {
+           var element = document.body;
+           element.classList.toggle("dark-mode");
+        }
+        </script>
+
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -57,9 +169,6 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#Contact">Contact</a>
                 </li>
@@ -90,7 +199,7 @@
 
 
     <div class="container my-4">
-        <div class="jumbotron">
+        <div class="jumbotron DarkIgnore">
             <h1 class="display-4">Current time Is: <span id="time"></span></h1>
             <p class="lead">This is a simple project made by me to display usage of Javascript and Bootstrap.</p>
             <p>This a simple jumbotron-style(class in bootstrap) component for
@@ -99,7 +208,6 @@
             <p>We are here to show you the time for different countries</p>
             <label for="city">Choose a city name:</label>
             <select name="city" id="city">
-                <option value="Bombay">Bombay</option>
                 <option value="Singapore">Singapore</option>
                 <option value="London">London</option>
                 <option value="USA">USA</option>
@@ -111,17 +219,20 @@
                 <option value="Bangladesh">Bangladesh</option>
                 <option value="Spain">Spain</option>
               </select>
-            <a class="btn btn-primary btn-lg" onclick="citySelected();" role="button">Know this City's Time</a>
+            <a class="btn btn-primary btn-lg" id="KnowTimeButton" onclick="citySelected();" role="button">Know this City's Time</a>
         </div>
     </div>
+    <!--modal dialog-->
+    <div id = "dialog-3" title = "Show Date and Time Dialog:">This my first jQuery UI Dialog with default message!</div>
+    <!--<button id = "opener-3">Open Dialog</button>-->
 
     <div class="container my-4" id="displaying">
         <!--Displaying user and email: fetching data thorugh api json placeholder-->
-        <div class="displaying" style="padding: 1rem;">
+        <div class="displaying " style="padding: 1rem;">
             <div class="display-wrapper" >
             <h2>Displaying Registered Users/email:</h2>
             </div>
-            <div class="user-cards" display-user-cards-container></div>
+            <div class="user-cards DarkIgnore" display-user-cards-container></div>
             <template display-user-template>
                 <div class="card">
                     <div class="header" display-header></div>
@@ -141,7 +252,7 @@
                 <label for="search"><h2>Search Users Details:</h2></label>
                 <input type="search" id="search" placeholder="Name/Email" data-search>
             </div>
-            <div class="user-cards" data-user-cards-container></div>
+            <div class="user-cards DarkIgnore" data-user-cards-container></div>
             <template data-user-template>
                 <div class="card">
                     <div class="header" data-header></div>
@@ -152,7 +263,7 @@
             </template>
         </div>
 
-        <div class="jumbotron" id="Contact">
+        <div class="jumbotron contactClassNotToggeDarkMode" id="Contact">
             <h1 class="display-4">Contact Details: <span id="time"></span></h1>
             <p class="lead"> Phone: <a>+91-9415182799</a></p>
             <p class="lead"> Email: <a href="mailto:pulkitsuryavanshi34@gmail.com">Send me a mail</a></p>
@@ -173,6 +284,27 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
+    <!-- Jquery reference -->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
+    <script>
+        $(function() {
+           $( "#dialog-3" ).dialog({
+              autoOpen: false, 
+              hide: "puff",
+              show : "slide",
+              height: 200      
+           });
+           $( "#KnowTimeButton" ).click(function() {
+              $( "#dialog-3" ).dialog( "open" );
+           });
+           /*$( "#opener-3" ).click(function() {
+              $( "#dialog-3" ).dialog( "open" );
+           });*/
+        });
+    </script>
 </body>
 
 </html>
