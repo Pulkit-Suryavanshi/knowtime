@@ -9,6 +9,8 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
         integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
 
     <title>Pulkits Time page</title>
     <script>
@@ -25,7 +27,7 @@
 
         function citySelected(){
         var selectedCity = document.getElementById("city").value;
-        var timeOffset={'Bombay':'+5.5','Singapore':'+8','London':'+0'};
+        var timeOffset={'Bombay':'+5.5','Singapore':'+8','London':'+0','USA':'-11','New Zealand':'+13','Austrailia':'+10.5','Russia':'+3','Japan':'+9','China':'+8','Bangladesh':'+6','Spain':'+1'};
         timeOfSelectedCity=calcTime(selectedCity,timeOffset[selectedCity])
         alert("City selected is: "+ selectedCity + ", date and time here is: "+ timeOfSelectedCity);
         }
@@ -45,7 +47,7 @@
     </script>
 </head>
 
-<body>
+<body  style=" text-align: center;">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">Know Time</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
@@ -67,8 +69,8 @@
                         Dropdown
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
+                        <a class="dropdown-item" href="#contents">Search User</a>
+                        <a class="dropdown-item" href="#displaying">Display User</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Something else here</a>
                     </div>
@@ -79,7 +81,7 @@
                 -->
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" data-search>
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
@@ -100,12 +102,57 @@
                 <option value="Bombay">Bombay</option>
                 <option value="Singapore">Singapore</option>
                 <option value="London">London</option>
+                <option value="USA">USA</option>
+                <option value="New Zealand">New Zealand</option>
+                <option value="Austrailia">Austrailia</option>
+                <option value="Russia">Russia</option>
+                <option value="Japan">Japan</option>
+                <option value="China">China</option>
+                <option value="Bangladesh">Bangladesh</option>
+                <option value="Spain">Spain</option>
               </select>
-            <a class="btn btn-primary btn-lg" onclick="citySelected();" role="button">Know this City Time</a>
+            <a class="btn btn-primary btn-lg" onclick="citySelected();" role="button">Know this City's Time</a>
         </div>
     </div>
-    <div class="container my-4" id="Contact">
-        <div class="jumbotron">
+
+    <div class="container my-4" id="displaying">
+        <!--Displaying user and email: fetching data thorugh api json placeholder-->
+        <div class="displaying" style="padding: 1rem;">
+            <div class="display-wrapper" >
+            <h2>Displaying Registered Users/email:</h2>
+            </div>
+            <div class="user-cards" display-user-cards-container></div>
+            <template display-user-template>
+                <div class="card">
+                    <div class="header" display-header></div>
+                    <div class="body" display-body></div>
+                    <!--id:<div class="id" display-id></div>-->
+                    <!--phone:<div class="phone" display-phone></div>-->
+                </div>
+            </template>
+        </div>
+    </div>
+
+
+    <div class="container my-4" id="contents">
+        <!--Searching user: fetching data thorugh api json placeholder-->
+        <div class="searching" style="padding: 1rem;">
+            <div class="search-wrapper" >
+                <label for="search"><h2>Search Users Details:</h2></label>
+                <input type="search" id="search" placeholder="Name/Email" data-search>
+            </div>
+            <div class="user-cards" data-user-cards-container></div>
+            <template data-user-template>
+                <div class="card">
+                    <div class="header" data-header></div>
+                    <div class="body" data-body></div>
+                    <div class="id" data-id>id: </div>
+                    <div class="phone" data-phone>phone:</div>
+                </div>
+            </template>
+        </div>
+
+        <div class="jumbotron" id="Contact">
             <h1 class="display-4">Contact Details: <span id="time"></span></h1>
             <p class="lead"> Phone: <a>+91-9415182799</a></p>
             <p class="lead"> Email: <a href="mailto:pulkitsuryavanshi34@gmail.com">Send me a mail</a></p>
@@ -113,6 +160,7 @@
             <p class="lead"> Portfolio Site: <a href="https://pulkit-suryavanshi.github.io/Portfolio/" target="_blank">My Portfolio</a></p>
         </div>
     </div>
+   
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
