@@ -21,4 +21,4 @@
 Open index.html
 
 ## Launch
-[ToDo](https://pulkit-suryavanshi.github.io/knowtime/)
+[knowtime](https://pulkit-suryavanshi.github.io/knowtime/)
